@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: "demo"
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: "jdbc:postgresql://100.71.190.42:5432/airbnb"
+    username: "admin"
+    password: "2314"
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
