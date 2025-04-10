@@ -3,6 +3,7 @@ package nexa.groupe.airbnb.services;
 import nexa.groupe.airbnb.models.Users;
 import nexa.groupe.airbnb.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+//import com.querydsl.core.types.Predicate;
 
 import java.util.List;
 import java.util.Optional;
