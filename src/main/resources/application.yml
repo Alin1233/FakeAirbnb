@@ -3,9 +3,9 @@ spring:
     name: "demo"
   datasource:
     driverClassName: org.postgresql.Driver
-    url: "jdbc:postgresql://localhost:5432/fakeAirBnB"
+    url: "jdbc:postgresql://localhost:5432/airbnb"
     username: "postgres"
-    password: "Sk14529856"
+    password: ""
   jpa:
     hibernate:
       ddl-auto: none
