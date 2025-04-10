@@ -22,12 +22,13 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public List<Users> getUsers(@RequestParam(required = false) String search) {
+    public List<Users> searchUsers(@RequestParam(required = false) String search) {
         if (search != null && !search.isEmpty()) {
-            return userService.getUsersByFirstnameOrLastname(search);
+            return userService.getUsersByKeyword(search);
         }
         return userService.getAllUsers();
     }
+
 
     @GetMapping
     public Page<Users> getAllUsers(

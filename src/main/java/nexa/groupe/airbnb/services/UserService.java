@@ -26,8 +26,9 @@ public class UserService {
         return userRepository.findAll(predicate, pageable);
     }
 
-    public List<Users> getUsersByFirstnameOrLastname(String keyword) {
-        return userRepository.findByFirstnameIgnoreCaseOrLastnameIgnoreCase(keyword, keyword);
+    public List<Users> getUsersByKeyword(String keyword) {
+        return userRepository.findByFirstnameContainingIgnoreCaseOrLastnameContainingIgnoreCaseOrPhoneContainingIgnoreCase(
+                keyword, keyword, keyword);
     }
 
     public Optional<Users> getUserById(String id) {

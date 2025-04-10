@@ -7,7 +7,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<Users, String>, QuerydslPredicateExecutor<Users> {
-
-    List<Users> findByFirstnameIgnoreCaseOrLastnameIgnoreCase(String firstname, String lastname);
+    List<Users> findByFirstnameContainingIgnoreCaseOrLastnameContainingIgnoreCaseOrPhoneContainingIgnoreCase(
+            String firstname, String lastname, String phone);
 }
 
