@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface RoleRepository extends JpaRepository<Role, Long> {
-    List<Role> findByNameIgnoreCase(String name);
+public interface RoleRepository extends JpaRepository<Role, String> {
+    List<Role> findByRoleNameIgnoreCase(String roleName);
 }

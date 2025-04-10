@@ -26,8 +26,8 @@ public class RoleController {
         return roleService.searchRole(query);
     }
 
-    @GetMapping("/{id}")
-    public Optional<Role> getRoleById(@PathVariable Long id) {
-        return roleService.getRoleById(id);
+    @GetMapping("/{roleId}")
+    public Optional<Role> getRoleById(@PathVariable String roleId) {
+        return roleService.getRoleById(roleId);
     }
 }

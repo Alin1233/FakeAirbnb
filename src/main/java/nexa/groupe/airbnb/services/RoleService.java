@@ -19,21 +19,19 @@ public class RoleService {
         return roleRepository.findAll();
     }
 
-    public Optional<Role> getRoleById(Long id) {
-        return roleRepository.findById(id);
+    public Optional<Role> getRoleById(String roleId) {
+        return roleRepository.findById(roleId);
     }
 
     public List<Role> findByNameIgnoreCase(String name) {
-        return roleRepository.findByNameIgnoreCase(name);
+        return roleRepository.findByRoleNameIgnoreCase(name);
     }
 
     public Optional<Role> searchRole(String query) {
-        try {
-            Long id = Long.parseLong(query);
-            return roleRepository.findById(id);
-        } catch (NumberFormatException e) {
-            List<Role> roles = roleRepository.findByNameIgnoreCase(query);
-            return roles.isEmpty() ? Optional.empty() : Optional.of(roles.get(0));
-        }
+        Optional<Role> byId = roleRepository.findById(query);
+        if (byId.isPresent()) return byId;
+
+        List<Role> byName = roleRepository.findByRoleNameIgnoreCase(query);
+        return byName.isEmpty() ? Optional.empty() : Optional.of(byName.get(0));
     }
 }
