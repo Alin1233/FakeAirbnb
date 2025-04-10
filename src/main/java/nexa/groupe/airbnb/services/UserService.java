@@ -1,9 +1,11 @@
 package nexa.groupe.airbnb.services;
 
+import com.querydsl.core.types.Predicate;
 import nexa.groupe.airbnb.models.Users;
 import nexa.groupe.airbnb.repositories.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-//import com.querydsl.core.types.Predicate;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,9 +22,14 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public Page<Users> getAllUsers(Pageable pageable, Predicate predicate) {
+        return userRepository.findAll(predicate, pageable);
+    }
+
     public List<Users> getUsersByFirstnameOrLastname(String keyword) {
         return userRepository.findByFirstnameIgnoreCaseOrLastnameIgnoreCase(keyword, keyword);
     }
+
     public Optional<Users> getUserById(String id) {
         return userRepository.findById(id);
     }
@@ -41,5 +48,4 @@ public class UserService {
 
         return userRepository.save(existingUser);
     }
-
 }

@@ -1,8 +1,7 @@
 package nexa.groupe.airbnb.controllers;
 
-//import com.querydsl.core.types.dsl.BooleanExpression;
-//import com.querydsl.core.types.Predicate;
-//import nexa.groupe.airbnb.models.QUsers;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import nexa.groupe.airbnb.models.QUsers;
 import nexa.groupe.airbnb.models.Users;
 import nexa.groupe.airbnb.services.UserService;
 import org.springframework.data.domain.Page;
@@ -22,7 +21,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/search")
     public List<Users> getUsers(@RequestParam(required = false) String search) {
         if (search != null && !search.isEmpty()) {
             return userService.getUsersByFirstnameOrLastname(search);
@@ -30,30 +29,30 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-//    @GetMapping
-//    public Page<Users> getAllUsers(
-//            @RequestParam(required = false) String firstname,
-//            @RequestParam(required = false) String lastname,
-//            @RequestParam(required = false) String phone,
-//            Pageable pageable
-//    ) {
-//        QUsers qUser = QUsers.users;
-//        BooleanExpression predicate = qUser.isNotNull(); // base : toujours vrai
-//
-//        if (firstname != null && !firstname.isEmpty()) {
-//            predicate = predicate.and(qUser.firstname.containsIgnoreCase(firstname));
-//        }
-//
-//        if (lastname != null && !lastname.isEmpty()) {
-//            predicate = predicate.and(qUser.lastname.containsIgnoreCase(lastname));
-//        }
-//
-//        if (phone != null && !phone.isEmpty()) {
-//            predicate = predicate.and(qUser.phone.containsIgnoreCase(phone));
-//        }
-//
-//        return userService.getAllUsers(pageable, predicate);
-//    }
+    @GetMapping
+    public Page<Users> getAllUsers(
+            @RequestParam(required = false) String firstname,
+            @RequestParam(required = false) String lastname,
+            @RequestParam(required = false) String phone,
+            Pageable pageable
+    ) {
+        QUsers qUser = QUsers.users;
+        BooleanExpression predicate = qUser.isNotNull();
+
+        if (firstname != null && !firstname.isEmpty()) {
+            predicate = predicate.and(qUser.firstname.containsIgnoreCase(firstname));
+        }
+
+        if (lastname != null && !lastname.isEmpty()) {
+            predicate = predicate.and(qUser.lastname.containsIgnoreCase(lastname));
+        }
+
+        if (phone != null && !phone.isEmpty()) {
+            predicate = predicate.and(qUser.phone.containsIgnoreCase(phone));
+        }
+
+        return userService.getAllUsers(pageable, predicate);
+    }
 
     @GetMapping("/{id}")
     public Optional<Users> getUserById(@PathVariable String id) {
@@ -70,4 +69,3 @@ public class UserController {
         return userService.updateUser(id, user);
     }
 }
-
