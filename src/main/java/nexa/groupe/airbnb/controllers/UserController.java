@@ -22,7 +22,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    // Récupérer tous les utilisateurs OU rechercher par nom/prénom
     @GetMapping
     public List<Users> getUsers(@RequestParam(required = false) String search) {
         if (search != null && !search.isEmpty()) {
@@ -56,18 +55,16 @@ public class UserController {
 //        return userService.getAllUsers(pageable, predicate);
 //    }
 
-    // Récupérer un utilisateur par ID
     @GetMapping("/{id}")
     public Optional<Users> getUserById(@PathVariable String id) {
         return userService.getUserById(id);
     }
 
-    // Création d'un user
     @PostMapping
     public Users createUser(@RequestBody Users user) {
         return userService.createUser(user);
     }
-    //Update un User
+
     @PutMapping("/{id}")
     public Users updateUser(@PathVariable String id, @RequestBody Users user) {
         return userService.updateUser(id, user);
