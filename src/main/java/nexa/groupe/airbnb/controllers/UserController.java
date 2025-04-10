@@ -1,7 +1,11 @@
 package nexa.groupe.airbnb.controllers;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+import nexa.groupe.airbnb.models.QUsers;
 import nexa.groupe.airbnb.models.Users;
 import nexa.groupe.airbnb.services.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +21,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    // Récupérer tous les utilisateurs OU rechercher par nom/prénom
-    @GetMapping
+    @GetMapping("/search")
     public List<Users> getUsers(@RequestParam(required = false) String search) {
         if (search != null && !search.isEmpty()) {
             return userService.getUsersByFirstnameOrLastname(search);
@@ -26,9 +29,43 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    // ✅ Récupérer un utilisateur par ID
+    @GetMapping
+    public Page<Users> getAllUsers(
+            @RequestParam(required = false) String firstname,
+            @RequestParam(required = false) String lastname,
+            @RequestParam(required = false) String phone,
+            Pageable pageable
+    ) {
+        QUsers qUser = QUsers.users;
+        BooleanExpression predicate = qUser.isNotNull();
+
+        if (firstname != null && !firstname.isEmpty()) {
+            predicate = predicate.and(qUser.firstname.containsIgnoreCase(firstname));
+        }
+
+        if (lastname != null && !lastname.isEmpty()) {
+            predicate = predicate.and(qUser.lastname.containsIgnoreCase(lastname));
+        }
+
+        if (phone != null && !phone.isEmpty()) {
+            predicate = predicate.and(qUser.phone.containsIgnoreCase(phone));
+        }
+
+        return userService.getAllUsers(pageable, predicate);
+    }
+
     @GetMapping("/{id}")
     public Optional<Users> getUserById(@PathVariable String id) {
         return userService.getUserById(id);
+    }
+
+    @PostMapping
+    public Users createUser(@RequestBody Users user) {
+        return userService.createUser(user);
+    }
+
+    @PutMapping("/{id}")
+    public Users updateUser(@PathVariable String id, @RequestBody Users user) {
+        return userService.updateUser(id, user);
     }
 }
