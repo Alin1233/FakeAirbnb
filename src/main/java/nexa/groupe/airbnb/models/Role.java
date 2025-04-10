@@ -7,14 +7,11 @@ import jakarta.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-public class Users {
+public class Role {
     @Id
-    private Long id;
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String phone;
+    private Long role_id;
+    private String name;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "role")
     private List<UsersRole> usersRoles;
 }
