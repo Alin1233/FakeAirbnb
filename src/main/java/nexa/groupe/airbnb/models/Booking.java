@@ -34,12 +34,12 @@ public class Booking {
     @Column(name = "price", nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "city_id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_city"))
     private City city;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "user_id", nullable = true,
             foreignKey = @ForeignKey(name = "fk_booking_user"))
     private Users user;
