@@ -22,8 +22,23 @@ public class UserService {
     public List<Users> getUsersByFirstnameOrLastname(String keyword) {
         return userRepository.findByFirstnameIgnoreCaseOrLastnameIgnoreCase(keyword, keyword);
     }
-
     public Optional<Users> getUserById(String id) {
         return userRepository.findById(id);
     }
+
+    public Users createUser(Users user) {
+        return userRepository.save(user);
+    }
+
+    public Users updateUser(String id, Users updatedUser) {
+        Users existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        existingUser.setFirstname(updatedUser.getFirstname());
+        existingUser.setLastname(updatedUser.getLastname());
+        existingUser.setPhone(updatedUser.getPhone());
+
+        return userRepository.save(existingUser);
+    }
+
 }
