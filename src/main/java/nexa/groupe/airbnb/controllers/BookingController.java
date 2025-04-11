@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/bookings")
+@RequestMapping("/bookings")
 public class BookingController {
 
     private final BookingService bookingService;

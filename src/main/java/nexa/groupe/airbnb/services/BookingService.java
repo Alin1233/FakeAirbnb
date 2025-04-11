@@ -49,13 +49,9 @@ public class BookingService {
         if (filter == null) {
             return builder.getValue();
         }
-
-        // Title filter
         if (filter.getTitleContains() != null && !filter.getTitleContains().isEmpty()) {
             builder.and(booking.title.containsIgnoreCase(filter.getTitleContains()));
         }
-
-        // Date range filters
         if (filter.getArrivalDateFrom() != null) {
             builder.and(booking.arrivalDate.goe(filter.getArrivalDateFrom()));
         }
@@ -71,22 +67,15 @@ public class BookingService {
         if (filter.getCheckoutDateTo() != null) {
             builder.and(booking.checkoutDate.loe(filter.getCheckoutDateTo()));
         }
-
-        // Price range filter
         if (filter.getMinPrice() != null) {
             builder.and(booking.price.goe(filter.getMinPrice()));
         }
-
         if (filter.getMaxPrice() != null) {
             builder.and(booking.price.loe(filter.getMaxPrice()));
         }
-
-        // City filter
         if (filter.getCityId() != null) {
             builder.and(booking.city.id.eq(filter.getCityId()));
         }
-
-        // User filter
         if (filter.getUserId() != null && !filter.getUserId().isEmpty()) {
             builder.and(booking.user.id.eq(filter.getUserId()));
         }
